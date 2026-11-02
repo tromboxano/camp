@@ -1,0 +1,4 @@
+nicegui>=2.0
+shapely>=2.0
+SQLAlchemy>=2.0
+psycopg[binary]>=3.2
