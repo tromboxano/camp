@@ -2254,17 +2254,19 @@ def main_page():
                             ui.notify(f"Mapa centrado en {resultado['display_name']}", type='positive')
     
                         ui.button('Buscar en el mapa', on_click=buscar_localidad, icon='search')
-                    with ui.row().classes('w-full no-wrap'):
+                    with ui.column().classes('w-full gap-4'):
                         mapa = ui.leaflet(center=(-35.66, -63.75), zoom=13,
+                            options={'maxZoom': 22},
                             draw_control={'draw': {'polygon': True, 'marker': False, 'circle': False,
                                 'rectangle': False, 'polyline': False, 'circlemarker': False},
-                                'edit': {'edit': False, 'remove': False}}).classes('w-2/3').style('height:80vh')
+                                'edit': {'edit': False, 'remove': False}}).classes('w-full').style('height:80vh')
                         app.storage.client['mapa'] = mapa
                         mapa.tile_layer(url_template='https://server.arcgisonline.com/ArcGIS/rest/services/'
-                                        'World_Imagery/MapServer/tile/{z}/{y}/{x}', options={'maxZoom': 19})
+                                        'World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                                        options={'maxZoom': 22, 'maxNativeZoom': 17})
                         mapa.on('map-click', al_click)
                         mapa.on('draw:created', al_dibujar)
-                        with ui.column().classes('w-1/3'):
+                        with ui.column().classes('w-full'):
                             panel_lote()
                 # Subventana de lotes: tabla y superficie total.
                 with ui.tab_panel(t_listado):
